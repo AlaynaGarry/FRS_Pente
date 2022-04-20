@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum Piece
+public enum ePiece
 {
     RED,
     ORANGE,
