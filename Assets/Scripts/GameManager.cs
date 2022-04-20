@@ -7,5 +7,8 @@ public class GameManager : MonoBehaviour
     List<Player> players = new List<Player>();
 
 
-    
+    public void Restart()
+    {
+
+    }
 }
