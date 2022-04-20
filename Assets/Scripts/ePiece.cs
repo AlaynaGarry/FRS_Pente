@@ -11,6 +11,7 @@ public enum Piece
     GREEN,
     BLUE,
     WHITE,
-    BLACK
+    BLACK,
+    NULL
 }
 
