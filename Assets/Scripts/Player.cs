@@ -6,4 +6,7 @@ public class Player
 {
     public string name;
     public ePiece piece;
+
+    public int captures;
+
 }
