@@ -2,23 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] GameObject gameWinPrefab;
+
     List<Player> players = new List<Player>();
     Player currentPlayer;
     Board gameBoard = new Board();
-    [SerializeField] GameObject gameWinPrefab;
+    public void Start()
+    {
+        DisplayWin();
+    }
 
     public void Restart()
     {
         currentPlayer = players[0];
         gameBoard = new Board();
         //update ui things
+        GameObject go = GameObject.Find("WinScreen");
+        Destroy(go);
     }
 
     public void DisplayWin()
     {
         GameObject gameWin = Instantiate(gameWinPrefab, GameObject.FindWithTag("Canvas").transform);
+        gameWin.name = "WinScreen";
     }
 
     //called from button with the x and y of the placement
