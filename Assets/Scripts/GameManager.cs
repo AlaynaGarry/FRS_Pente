@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameObject gameWinPrefab;
+    [SerializeField] SceneLoader sceneLoader;
 
     List<Player> players = new List<Player>();
     Player currentPlayer;
@@ -12,6 +13,11 @@ public class GameManager : Singleton<GameManager>
     public void Start()
     {
         DisplayWin();
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     public void Restart()
@@ -44,4 +50,10 @@ public class GameManager : Singleton<GameManager>
         currentPlayer = players[(players.FindIndex(player => player == currentPlayer) == players.Count - 1) ? 0 : players.FindIndex(player => player == currentPlayer) + 1];
         //update ui things
     }
+
+    public void OnLoadScene(string sceneName)
+    {
+        sceneLoader.Load(sceneName);
+    }
+
 }
