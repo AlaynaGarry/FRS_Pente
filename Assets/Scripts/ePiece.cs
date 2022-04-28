@@ -11,6 +11,7 @@ public enum ePiece
     BLUE,
     WHITE,
     BLACK,
+    PURPLE,
     NULL
 }
 

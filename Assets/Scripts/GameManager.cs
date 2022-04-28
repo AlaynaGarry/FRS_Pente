@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     Board gameBoard = new Board();
     public void Start()
     {
-        DisplayWin();
+        //DisplayWin();
     }
 
     public void Restart()
@@ -21,6 +21,11 @@ public class GameManager : Singleton<GameManager>
         //update ui things
         GameObject go = GameObject.Find("WinScreen");
         Destroy(go);
+    }
+
+    public void SetupGame(List<Player> players)
+    {
+        this.players = players;
     }
 
     public void DisplayWin()
