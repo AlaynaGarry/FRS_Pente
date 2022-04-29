@@ -107,7 +107,8 @@ public class Board
                 if (count >= 5) return true;
             }
         }
-        for (int i = ((int)position.x), j = ((int)position.y); i < position.x - 5 && j < position.y -5; i--,j--)
+
+        for (int i = ((int)position.x), j = ((int)position.y); i < position.x - 5 && j < position.y - 5; i--,j--)
         {
             if (board[j][i] != player.piece)
             {
@@ -119,6 +120,34 @@ public class Board
                 if (count >= 5) return true;
             }
         }
+
+        count = 0;
+        for (int i = ((int)position.x), j = ((int)position.y); i < position.x - 5 && j < position.y + 5; i--,j++)
+        {
+            if (board[j][i] != player.piece)
+            {
+                break;
+            }
+            else
+            {
+                count++;
+                if (count >= 5) return true;
+            }
+        }
+
+        for (int i = ((int)position.x), j = ((int)position.y); i < position.x + 5 && j < position.y - 5; i++, j--)
+        {
+            if (board[j][i] != player.piece)
+            {
+                break;
+            }
+            else
+            {
+                count++;
+                if (count >= 5) return true;
+            }
+        }
+
         return false;
     }
 }
