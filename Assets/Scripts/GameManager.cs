@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameObject gameWinPrefab;
     [SerializeField] SceneLoader sceneLoader;
+    [SerializeField] GameObject hoverPiece;
+    [SerializeField] GameObject canvas;
 
     List<Player> players = new List<Player>();
     Player currentPlayer;
     Board gameBoard = new Board();
+
     public void Start()
     {
         DisplayWin();
@@ -27,6 +31,18 @@ public class GameManager : Singleton<GameManager>
         //update ui things
         GameObject go = GameObject.Find("WinScreen");
         Destroy(go);
+        PopulateBoard();
+    }
+
+    public void PopulateBoard()
+    {
+        for (int x = 0; x < 19; x++)
+        {
+            for (int y = 0; y < 19; y++)
+            {
+                Instantiate(hoverPiece, new Vector3(x * 2.22f, y * -2.22f, 0), Quaternion.identity, canvas.transform);
+            }
+        }
     }
 
     public void DisplayWin()

@@ -27,6 +27,8 @@ public class Board
         new ePiece[]{ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL }
     };
 
+    
+
     public bool CheckWin(Player player, Vector2 placementPosition)
     {
         return checkDiagonalFromPosition(player, placementPosition) || checkHorizontalFromPosition(player, placementPosition) || checkVerticalFromPosition(player, placementPosition);
