@@ -3,7 +3,9 @@ guid: cecef978d4c0743459b7b5da4f21e8ac
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hoverPiece: {fileID: 6941895740249700399, guid: eb8353339fa23724e9374410b719c0a9, type: 3}
+  - canvas: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
