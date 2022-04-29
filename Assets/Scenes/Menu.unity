@@ -781,10 +781,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1279073919992728618, guid: 609ff5bbbc2ff1944a6a1f2a38163d76, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4772710659275156233, guid: 609ff5bbbc2ff1944a6a1f2a38163d76, type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4772710659275156238, guid: 609ff5bbbc2ff1944a6a1f2a38163d76, type: 3}
+      propertyPath: hoverPiece
+      value: 
+      objectReference: {fileID: 6941895740249700399, guid: eb8353339fa23724e9374410b719c0a9, type: 3}
     - target: {fileID: 4772710659275156239, guid: 609ff5bbbc2ff1944a6a1f2a38163d76, type: 3}
       propertyPath: m_RootOrder
       value: 3

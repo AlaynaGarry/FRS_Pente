@@ -8,10 +8,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject gameWinPrefab;
     [SerializeField] SceneLoader sceneLoader;
     [SerializeField] GameObject hoverPiece;
-    [SerializeField] GameObject canvas;
+    [SerializeField] public  List<Sprite> pieceTextures;
+
 
     List<Player> players = new List<Player>();
-    Player currentPlayer;
+    public Player currentPlayer;
     Board gameBoard = new Board();
 
     public void Start()
@@ -29,8 +30,11 @@ public class GameManager : Singleton<GameManager>
         currentPlayer = players[0];
         gameBoard = new Board();
         //update ui things
-        GameObject go = GameObject.Find("WinScreen");
-        Destroy(go);
+        if (gameWinPrefab != null)
+        {
+            GameObject go = GameObject.Find("WinScreen");
+            Destroy(go);
+        }
         PopulateBoard();
     }
 
@@ -40,7 +44,8 @@ public class GameManager : Singleton<GameManager>
         {
             for (int y = 0; y < 19; y++)
             {
-                Instantiate(hoverPiece, new Vector3(x * 2.22f, y * -2.22f, 0), Quaternion.identity, canvas.transform);
+                var piece = Instantiate(hoverPiece, new Vector3(x * 2.22f, y * -2.22f, 0), Quaternion.identity, GameObject.FindWithTag("Canvas").transform);
+                piece.GetComponent<PhysicalPiece>().locationOnBoard = new Vector2(x, y);
             }
         }
     }
@@ -48,12 +53,17 @@ public class GameManager : Singleton<GameManager>
     public void SetupGame(List<Player> players)
     {
         this.players = players;
+        OnLoadScene("TestBoard");
     }
 
     public void DisplayWin()
     {
-        GameObject gameWin = Instantiate(gameWinPrefab, GameObject.FindWithTag("Canvas").transform);
-        gameWin.name = "WinScreen";
+        if (gameWinPrefab != null)
+        {
+
+            GameObject gameWin = Instantiate(gameWinPrefab, GameObject.FindWithTag("Canvas").transform);
+            gameWin.name = "WinScreen";
+        }
     }
 
     //called from button with the x and y of the placement
@@ -64,7 +74,6 @@ public class GameManager : Singleton<GameManager>
         bool hasWon = gameBoard.CheckWin(currentPlayer, placementLocation) || CheckPlayerCaptureWin();
         if (hasWon) DisplayWin();
         else UpdatePlayerTurn();
-
     }
 
     public void CheckForPlayerCapture(Vector2 placementLocation)
@@ -78,6 +87,7 @@ public class GameManager : Singleton<GameManager>
 
         for (int position = 0; position < positionsToCheckForCurPlayerPiece.Length; position++)
         {
+            if ((int)positionsToCheckForCurPlayerPiece[position].y < 0 || (int)positionsToCheckForCurPlayerPiece[position].y >= 19 || (int)positionsToCheckForCurPlayerPiece[position].x < 0 || (int)positionsToCheckForCurPlayerPiece[position].x >= 19) break;
             if (gameBoard.board[(int)positionsToCheckForCurPlayerPiece[position].y][(int)positionsToCheckForCurPlayerPiece[position].x] == currentPlayer.piece)
             {
                 indexOfValidPositionsToCheck.Add(position);
@@ -90,7 +100,7 @@ public class GameManager : Singleton<GameManager>
             int verticalChange = (int)(placementLocation.y - positionOfOtherPiece.y);
             int horizontalChange = (int)(placementLocation.x - positionOfOtherPiece.x);
 
-            bool hasCaptured =  IsPositionCaptured(placementLocation, positionOfOtherPiece, verticalChange, horizontalChange);
+            bool hasCaptured = IsPositionCaptured(placementLocation, positionOfOtherPiece, verticalChange, horizontalChange);
 
             if (hasCaptured)
             {

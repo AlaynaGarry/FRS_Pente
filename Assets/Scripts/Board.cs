@@ -37,7 +37,7 @@ public class Board
     private bool checkVerticalFromPosition(Player player, Vector2 position)
     {
         int count = 0;
-        for (int i = ((int)position.y); i < position.y + 5; i++)
+        for (int i = ((int)position.y); i < position.y + 5 && i < board.Length; i++)
         {
             if (board[i][((int)position.x)] != player.piece)
             {
