@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject hoverPiece;
     [SerializeField] public  List<Sprite> pieceTextures;
 
-
+    List<PhysicalPiece> boardPieces = new List<PhysicalPiece>();
     List<Player> players = new List<Player>();
     public Player currentPlayer;
     Board gameBoard = new Board();
@@ -46,6 +46,7 @@ public class GameManager : Singleton<GameManager>
             {
                 var piece = Instantiate(hoverPiece, new Vector3(x * 2.22f, y * -2.22f, 0), Quaternion.identity, GameObject.FindWithTag("Canvas").transform);
                 piece.GetComponent<PhysicalPiece>().locationOnBoard = new Vector2(x, y);
+                boardPieces.Add(piece.GetComponent<PhysicalPiece>());
             }
         }
     }
@@ -153,6 +154,13 @@ public class GameManager : Singleton<GameManager>
             for (int vert = (int)placementLocation.y + (verticalChange / 2); (verticalChange > 0) ? (vert >= positionOfOtherPiece.y) : (vert <= positionOfOtherPiece.y); vert += (verticalChange > 0) ? -1 : 1)
             {
                 gameBoard.board[vert][(int)placementLocation.x] = ePiece.NULL;
+                foreach(var piece in boardPieces)
+                {
+                    if (piece.locationOnBoard == placementLocation)
+                    {
+                        piece.RemovePiece();
+                    }
+                }
             }
         }
         else if (verticalChange == 0)
@@ -161,7 +169,13 @@ public class GameManager : Singleton<GameManager>
             for (int horziontal = (int)placementLocation.x + (horizontalChange / 2); (horizontalChange > 0) ? (horziontal >= positionOfOtherPiece.x) : (horziontal <= positionOfOtherPiece.x); horziontal += (horizontalChange > 0) ? -1 : 1)
             {
                 gameBoard.board[(int)placementLocation.y][horziontal] = ePiece.NULL;
-
+                foreach (var piece in boardPieces)
+                {
+                    if (piece.locationOnBoard == placementLocation)
+                    {
+                        piece.RemovePiece();
+                    }
+                }
             }
         }
         else
@@ -173,13 +187,20 @@ public class GameManager : Singleton<GameManager>
                 horziontal += (horizontalChange > 0) ? -1 : 1, vert += (verticalChange > 0) ? -1 : 1)
             {
                 gameBoard.board[vert][horziontal] = ePiece.NULL;
-
+                foreach (var piece in boardPieces)
+                {
+                    if (piece.locationOnBoard == placementLocation)
+                    {
+                        piece.RemovePiece();
+                    }
+                }
             }
         }
     }
 
     private void CheckForPiecesBeingCaptureable(ref bool hasCaptured, ref ePiece pieceType, int horziontal, int vert)
     {
+        if (vert >= 19 || horziontal >= 19 || vert < 0 || horziontal < 0) return;
         if (gameBoard.board[vert][horziontal] == ePiece.NULL && pieceType != ePiece.NULL) hasCaptured = false;
         else if (pieceType == ePiece.NULL) pieceType = gameBoard.board[vert][horziontal];
     }

@@ -19,7 +19,13 @@ public class PhysicalPiece : MonoBehaviour
             piece.GetComponent<Image>().color = new Color(piece.GetComponent<Image>().color.r, piece.GetComponent<Image>().color.b, piece.GetComponent<Image>().color.g, 1);
             hoverApplicable = false;
         }
+    }
 
+    public void RemovePiece()
+    {
+        piece.GetComponent<Image>().sprite = GameManager.Instance.pieceTextures[8];
+        piece.GetComponent<Image>().color = new Color(piece.GetComponent<Image>().color.r, piece.GetComponent<Image>().color.b, piece.GetComponent<Image>().color.g, 0);
+        hoverApplicable = true;
     }
 
     public Sprite FindTextureFromEPiece(ePiece type)

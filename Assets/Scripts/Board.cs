@@ -27,7 +27,7 @@ public class Board
         new ePiece[]{ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL,ePiece.NULL }
     };
 
-    
+
 
     public bool CheckWin(Player player, Vector2 placementPosition)
     {
@@ -49,7 +49,7 @@ public class Board
                 if (count >= 5) return true;
             }
         }
-        for (int i = ((int)position.y); i < position.y - 5; i--)
+        for (int i = ((int)position.y); i > position.y - 5 && i >= 0; i--)
         {
             if (board[i][((int)position.x)] != player.piece)
             {
@@ -67,7 +67,7 @@ public class Board
     private bool checkHorizontalFromPosition(Player player, Vector2 position)
     {
         int count = 0;
-        for (int i = ((int)position.x); i < position.x + 5; i++)
+        for (int i = ((int)position.x); i < position.x + 5 && i < board.Length; i++)
         {
             if (board[((int)position.y)][i] != player.piece)
             {
@@ -79,7 +79,7 @@ public class Board
                 if (count >= 5) return true;
             }
         }
-        for (int i = ((int)position.x); i < position.x - 5; i--)
+        for (int i = ((int)position.x); i > position.x - 5 && i >= 0; i--)
         {
             if (board[((int)position.y)][i] != player.piece)
             {
@@ -97,7 +97,7 @@ public class Board
     private bool checkDiagonalFromPosition(Player player, Vector2 position)
     {
         int count = 0;
-        for (int i = ((int)position.x), j = ((int)position.y); i < position.x + 5 && j < position.y + 5; i++, j++)
+        for (int i = ((int)position.x), j = ((int)position.y); i < position.x + 5 && j < position.y + 5 && i < board.Length && j < board.Length; i++, j++)
         {
             if (board[j][i] != player.piece)
             {
@@ -110,7 +110,7 @@ public class Board
             }
         }
 
-        for (int i = ((int)position.x), j = ((int)position.y); i < position.x - 5 && j < position.y - 5; i--,j--)
+        for (int i = ((int)position.x), j = ((int)position.y); i > position.x - 5 && j > position.y - 5 && i >= 0 && j >= 0; i--, j--)
         {
             if (board[j][i] != player.piece)
             {
@@ -124,7 +124,7 @@ public class Board
         }
 
         count = 0;
-        for (int i = ((int)position.x), j = ((int)position.y); i < position.x - 5 && j < position.y + 5; i--,j++)
+        for (int i = ((int)position.x), j = ((int)position.y); i > position.x - 5 && j < position.y + 5 && i >= 0 && j < board.Length; i--, j++)
         {
             if (board[j][i] != player.piece)
             {
@@ -137,7 +137,7 @@ public class Board
             }
         }
 
-        for (int i = ((int)position.x), j = ((int)position.y); i < position.x + 5 && j < position.y - 5; i++, j--)
+        for (int i = ((int)position.x), j = ((int)position.y); i < position.x + 5 && j > position.y - 5 && i < board.Length && j >= 0; i++, j--)
         {
             if (board[j][i] != player.piece)
             {
