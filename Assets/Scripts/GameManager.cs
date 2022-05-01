@@ -68,7 +68,9 @@ public class GameManager : Singleton<GameManager>
     public void SetupGame()
     {
         gameWinObject.SetActive(false);
-        OnLoadScene("TestBoard");
+        boardPieces.ForEach(piece => Destroy(piece.gameObject));
+        boardPieces.Clear();
+        OnLoadScene("AutoLoadIntoBoard");
 
     }
 
@@ -104,7 +106,7 @@ public class GameManager : Singleton<GameManager>
 
         for (int position = 0; position < positionsToCheckForCurPlayerPiece.Length; position++)
         {
-            if ((int)positionsToCheckForCurPlayerPiece[position].y < 0 || (int)positionsToCheckForCurPlayerPiece[position].y >= 19 || (int)positionsToCheckForCurPlayerPiece[position].x < 0 || (int)positionsToCheckForCurPlayerPiece[position].x >= 19) break;
+            if ((int)positionsToCheckForCurPlayerPiece[position].y < 0 || (int)positionsToCheckForCurPlayerPiece[position].y >= 19 || (int)positionsToCheckForCurPlayerPiece[position].x < 0 || (int)positionsToCheckForCurPlayerPiece[position].x >= 19) continue;
             if (gameBoard.board[(int)positionsToCheckForCurPlayerPiece[position].y][(int)positionsToCheckForCurPlayerPiece[position].x] == currentPlayer.piece)
             {
                 indexOfValidPositionsToCheck.Add(position);
@@ -155,10 +157,12 @@ public class GameManager : Singleton<GameManager>
             //independently will loop diagonally in the board based on what the horizontalChange and verticalChange are
             int horizontalChangeForDivision = (horizontalChange > 0) ? horizontalChange - 1 : horizontalChange + 1;
             int verticalChangeForDivision = (verticalChange > 0) ? verticalChange - 1 : verticalChange + 1;
+            bool horizontalCondition = horizontalChange > 0;
+            bool verticalCondition = (verticalChange > 0);
             for (int horziontal = (int)placementLocation.x - (horizontalChangeForDivision / 2), vert = (int)placementLocation.y - (verticalChangeForDivision / 2);
-                (horizontalChange > 0) ? (horziontal > positionOfOtherPiece.x) : (horziontal < positionOfOtherPiece.x)
-                && (verticalChange > 0) ? (vert >= positionOfOtherPiece.y) : (vert <= positionOfOtherPiece.y);
-                horziontal += (horizontalChange > 0) ? -1 : 1, vert += (verticalChange > 0) ? -1 : 1)
+                horizontalCondition ? (horziontal > positionOfOtherPiece.x) : (horziontal < positionOfOtherPiece.x)
+                && verticalCondition ? (vert > positionOfOtherPiece.y) : (vert < positionOfOtherPiece.y);
+                horziontal += horizontalCondition ? -1 : 1, vert += verticalCondition ? -1 : 1)
             {
                 CheckForPiecesBeingCaptureable(ref hasCaptured, ref pieceType, horziontal, vert);
             }
@@ -217,11 +221,13 @@ public class GameManager : Singleton<GameManager>
         {
             int horizontalChangeForDivision = (horizontalChange > 0) ? horizontalChange-1 : horizontalChange + 1;
             int verticalChangeForDivision = (verticalChange > 0) ? verticalChange - 1 : verticalChange + 1;
+            bool horizontalCondition = horizontalChange > 0;
+            bool verticalCondition = (verticalChange > 0);
             //independently will loop diagonally in the board based on what the horizontalChange and verticalChange are
             for (int horziontal = (int)placementLocation.x - (horizontalChangeForDivision / 2), vert = (int)placementLocation.y - (verticalChangeForDivision / 2);
-                (horizontalChange > 0) ? (horziontal > positionOfOtherPiece.x) : (horziontal < positionOfOtherPiece.x)
-                && (verticalChange > 0) ? (vert >= positionOfOtherPiece.y) : (vert <= positionOfOtherPiece.y);
-                horziontal += (horizontalChange > 0) ? -1 : 1, vert += (verticalChange > 0) ? -1 : 1)
+                horizontalCondition ? (horziontal > positionOfOtherPiece.x) : (horziontal < positionOfOtherPiece.x)
+                && verticalCondition ? (vert > positionOfOtherPiece.y) : (vert < positionOfOtherPiece.y);
+                horziontal += horizontalCondition ? -1 : 1, vert += verticalCondition ? -1 : 1)
             {
                 gameBoard.board[vert][horziontal] = ePiece.NULL;
                 foreach (var piece in boardPieces)

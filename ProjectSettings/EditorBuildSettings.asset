@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestBoard.unity
     guid: 7506de8ebe64b77489193a006b113ade
+  - enabled: 1
+    path: Assets/Scenes/AutoLoadIntoBoard.unity
+    guid: f2d1d25fe4e0f0247b17850eef8bc5d9
   m_configObjects: {}
